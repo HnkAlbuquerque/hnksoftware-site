@@ -1,0 +1,151 @@
+/* ============ THEME TOKENS ============ */
+:root{
+  /* defaults — overridden by [data-theme] */
+  --bg:        oklch(0.992 0.003 250);
+  --bg-2:      oklch(0.972 0.005 250);
+  --card:      oklch(1 0 0);
+  --fg:        oklch(0.21 0.02 262);
+  --fg-2:      oklch(0.50 0.02 262);
+  --line:      oklch(0.90 0.008 262);
+  --line-2:    oklch(0.94 0.006 262);
+  --shadow-color: 262 30% 12%;
+  --shadow-strength: 0.06;
+
+  /* accent (set by tweak / direction) */
+  --accent:    oklch(0.55 0.16 255);
+  --accent-2:  oklch(0.62 0.15 255);
+  --on-accent: oklch(0.99 0 0);
+
+  /* direction (set by [data-dir]) */
+  --font-display: "Schibsted Grotesk", system-ui, sans-serif;
+  --font-body:    "Hanken Grotesk", system-ui, sans-serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, monospace;
+  --radius:    14px;
+  --radius-sm: 9px;
+  --display-weight: 700;
+  --display-tracking: -0.02em;
+  --maxw: 1180px;
+}
+[data-theme="light"]{
+  --bg:        oklch(0.992 0.003 250);
+  --bg-2:      oklch(0.970 0.005 250);
+  --card:      oklch(1 0 0);
+  --fg:        oklch(0.21 0.02 262);
+  --fg-2:      oklch(0.50 0.02 262);
+  --line:      oklch(0.90 0.008 262);
+  --line-2:    oklch(0.945 0.006 262);
+  --shadow-color: 262 35% 18%;
+  --shadow-strength: 0.07;
+}
+[data-theme="dark"]{
+  --bg:        oklch(0.165 0.012 262);
+  --bg-2:      oklch(0.205 0.014 262);
+  --card:      oklch(0.225 0.015 262);
+  --fg:        oklch(0.965 0.004 250);
+  --fg-2:      oklch(0.70 0.018 262);
+  --line:      oklch(0.32 0.016 262);
+  --line-2:    oklch(0.27 0.014 262);
+  --shadow-color: 262 60% 3%;
+  --shadow-strength: 0.5;
+}
+
+/* ============ DIRECTIONS ============ */
+[data-dir="clarity"]{
+  --font-display: "Schibsted Grotesk", system-ui, sans-serif;
+  --radius:14px; --radius-sm:9px;
+  --display-weight:700; --display-tracking:-0.025em;
+}
+[data-dir="engineered"]{
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --radius:5px; --radius-sm:4px;
+  --display-weight:600; --display-tracking:-0.02em;
+}
+[data-dir="editorial"]{
+  --font-display: "Bricolage Grotesque", system-ui, sans-serif;
+  --radius:20px; --radius-sm:13px;
+  --display-weight:700; --display-tracking:-0.03em;
+}
+
+/* ============ RESET / BASE ============ */
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--fg);
+  font-family:var(--font-body);
+  font-size:18px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  transition:background .4s ease, color .4s ease;
+  overflow-x:hidden;
+}
+::selection{background:color-mix(in oklab, var(--accent) 28%, transparent);}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:var(--display-weight);letter-spacing:var(--display-tracking);line-height:1.05;margin:0;text-wrap:balance;}
+p{margin:0;text-wrap:pretty;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px;}
+@media(max-width:680px){ .wrap{padding:0 20px;} body{font-size:16px;} }
+
+/* shadows */
+.shadow-sm{box-shadow:0 1px 2px hsl(var(--shadow-color)/calc(var(--shadow-strength)*0.8)), 0 4px 14px hsl(var(--shadow-color)/calc(var(--shadow-strength)*0.7));}
+.shadow-lg{box-shadow:0 2px 4px hsl(var(--shadow-color)/calc(var(--shadow-strength)*0.7)), 0 20px 50px -12px hsl(var(--shadow-color)/calc(var(--shadow-strength)*1.4));}
+
+/* eyebrow / labels */
+.eyebrow{
+  font-family:var(--font-mono);
+  font-size:12.5px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--accent);display:inline-flex;align-items:center;gap:9px;
+}
+.eyebrow::before{content:"";width:22px;height:1px;background:currentColor;opacity:.7;display:inline-block;}
+[data-dir="engineered"] .eyebrow::before{content:"[ ";width:auto;height:auto;background:none;letter-spacing:0;}
+[data-dir="engineered"] .eyebrow::after{content:" ]";}
+[data-dir="editorial"] .eyebrow{font-family:var(--font-body);font-weight:700;letter-spacing:0.02em;text-transform:none;font-size:15px;}
+[data-dir="editorial"] .eyebrow::before{width:9px;height:9px;border-radius:50%;background:var(--accent);}
+
+/* buttons */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  font-family:var(--font-body);font-weight:600;font-size:16px;
+  padding:14px 24px;border-radius:var(--radius-sm);border:1px solid transparent;
+  transition:transform .15s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease, color .2s ease;
+  white-space:nowrap;
+}
+.btn:active{transform:translateY(1px);}
+.btn-primary{background:var(--accent);color:var(--on-accent);}
+.btn-primary:hover{box-shadow:0 8px 24px -6px color-mix(in oklab,var(--accent) 55%, transparent);transform:translateY(-2px);}
+.btn-ghost{background:transparent;color:var(--fg);border-color:var(--line);}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+.btn-arrow{transition:transform .2s ease;}
+.btn:hover .btn-arrow{transform:translateX(3px);}
+
+/* placeholder imagery */
+.ph{
+  position:relative;overflow:hidden;border-radius:var(--radius-sm);
+  background:
+    repeating-linear-gradient(135deg,
+      color-mix(in oklab,var(--fg) 6%, transparent) 0 11px,
+      transparent 11px 22px),
+    var(--bg-2);
+  border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;
+}
+.ph span{
+  font-family:var(--font-mono);font-size:12px;letter-spacing:.04em;
+  color:var(--fg-2);background:var(--card);padding:5px 11px;border-radius:100px;border:1px solid var(--line);
+}
+
+/* reveal — animates transform only (never hides via opacity, so content is
+   always visible even if the animation timeline is frozen/throttled) */
+.reveal{transform:translateY(16px);transition:transform .7s cubic-bezier(.2,.7,.2,1);}
+.reveal.in{transform:none;}
+@media(prefers-reduced-motion:reduce){.reveal{transform:none!important;transition:none;}}
+
+/* section rhythm */
+section{padding:108px 0;}
+@media(max-width:680px){ section{padding:72px 0;} }
+.divider{height:1px;background:var(--line-2);}
+
+#root{min-height:100vh;}
